@@ -52,8 +52,6 @@ function App() {
   const [endTime, setEndTime] =
     useState("22:00");
 
-  // const [showCalendar, setShowCalendar] =
-  //   useState(false);
   const [step, setStep] =
     useState("proposal");
 
@@ -78,22 +76,49 @@ function App() {
     }
   };
 
-  async function handleSubmit() {
-    await submitResponse({
-      selectedDates: selectedProposals,
-      customAvailability: customDates.map(
-        (date) => ({
-          date: date.toISOString(),
-          startTime,
-          endTime,
-        })
-      ),
-      note,
-    });
+  const [submitted, setSubmitted] =
+    useState(false);
 
-    alert("Submitted ❤️");
+  async function handleSubmit() {
+    try {
+      await submitResponse({
+        selectedDates: selectedProposals,
+        customAvailability: customDates.map(
+          (date) => ({
+            date: date.toISOString(),
+            startTime,
+            endTime,
+          })
+        ),
+        note,
+      });
+
+      setSubmitted(true);
+    } catch (err) {
+      alert(
+        "Oops, something went wrong. Please try again. or complain directly to developer"
+      );
+    }
   }
 
+  if (submitted) {
+    return (
+      <div className="app">
+        <div className="card success-card">
+          <h1>Thank you ❤️</h1>
+
+          <p>
+            I've received your response.
+          </p>
+
+          <p>
+            Looking forward to seeing you 😊
+          </p>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="app">
       <p className="intro">

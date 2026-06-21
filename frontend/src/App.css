@@ -271,6 +271,19 @@ button {
   color: #ff5c8a;
 }
 
+.success-card {
+  text-align: center;
+}
+
+.success-card h1 {
+  margin-bottom: 16px;
+}
+
+.success-card p {
+  color: #666;
+  margin-bottom: 10px;
+}
+
 @media (max-width: 640px) {
 
   .card {
