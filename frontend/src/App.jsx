@@ -1,31 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import "./App.css";
 
 import "react-day-picker/style.css";
 
 import { submitResponse } from "./api";
-
-const proposals = [
-  {
-    id: 1,
-    title: "☕ Coffee After Work",
-    date: "2026-08-08",
-    time: "19:00",
-  },
-  {
-    id: 2,
-    title: "🍰 Dessert & Walk",
-    date: "2026-08-09",
-    time: "14:00",
-  },
-  {
-    id: 3,
-    title: "🌆 Dinner Together",
-    date: "2026-08-14",
-    time: "19:30",
-  },
-];
 
 function formatDate(dateString, time) {
   const date = new Date(`${dateString}T${time}`);
@@ -40,6 +19,19 @@ function formatDate(dateString, time) {
 }
 
 function App() {
+  const [proposals, setProposals] = useState([]);
+
+  useEffect(() => {
+    fetch("/proposals.json")
+      .then((res) => res.json())
+      .then((data) => setProposals(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  const activeProposals = proposals.filter(
+    (proposal) => proposal.active
+  );
+
   const [selectedProposals, setSelectedProposals] =
     useState([]);
 
@@ -139,7 +131,7 @@ function App() {
                 Do any of these dates work?
             </p>
             <div className="proposal-list">
-              {proposals.map((proposal) => {
+              {activeProposals.map((proposal) => {
                 const isSelected =
                   selectedProposals.some(
                     (p) => p.id === proposal.id
