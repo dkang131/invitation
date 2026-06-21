@@ -126,6 +126,13 @@ app.post("/api/respond", async (req, res) => {
   }
 });
 
+app.get("/health", (req, res) => {
+  res.json({
+    status: "ok",
+    timestamp: new Date(),
+  });
+});
+
 app.listen(9191, () => {
   log(
     "INFO",
