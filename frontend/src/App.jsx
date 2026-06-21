@@ -161,12 +161,6 @@ function App() {
         )}
         {step === "custom" && (
           <div className="calendar-section">
-            <button
-              className="back-btn"
-              onClick={() => setStep("proposal")}
-            >
-              ← Back to suggested dates
-            </button>
             <h2 className="section-title">
               No worries 😊
             </h2>
@@ -208,6 +202,15 @@ function App() {
                 />
               </div>
             </div>
+            <button
+              className="back-btn"
+              onClick={() => {
+                setCustomDates([]);
+                setStep("proposal");
+              }}
+            >
+              ← Actually, one of your suggested dates works 😊
+            </button>
           </div>
         )}
         {(
