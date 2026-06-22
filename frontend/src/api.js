@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:9191/api/respond";
+const API_URL = "/api/respond";
 
 export async function submitResponse(data) {
   const response = await fetch(API_URL, {
